@@ -139,7 +139,7 @@ Add a new customer.
 
 - **URL**
 
-  `addNewCustomer`
+  `/api/v1/addNewCustomer`
 
 - **Method**
 
