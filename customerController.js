@@ -35,7 +35,7 @@ async function getCustomers(req, res, next){
     } catch (error) {
         return res.status(500).json({
             result:false,
-            message : error.message
+            error: "Internal server error"
         })
     }
 }
@@ -64,7 +64,7 @@ async function getCustomerById(req, res){
     } catch (error) {
        return res.status(500).json({
         result: false,
-        message : error.message,
+        error: "Internal server error"
        }) 
     }
 }
@@ -86,7 +86,7 @@ async function getCityWithTotalCustomers(req, res){
             data : cityCounts
           })
     } catch (error) {
-        return res.status(500).json({result : false, message : error.message})
+        return res.status(500).json({result : false, error: "Internal server error"})
     }
 }
 
@@ -116,18 +116,22 @@ async function addNewCustomer(req,res){
             data.push(newCustomer);
             // Write the updated data back to the JSON file
             fs.writeFileSync(customerFilePath, JSON.stringify(data, null, 2));
-            return res.status(201).json({ result: true, data: newCustomer });
+            return res.status(201).json({ 
+                 result: true,
+                 message: "Customer added successfully",
+                 data: newCustomer
+                 });
         }else{
             return res.status(400).json({ result: false, message: "City or company is not exists, So you cannot add new city or company.." });      
         }
         })
         } else {
-            return res.status(400).json({ result: false, message: "Please provide all fields" });
+            return res.status(400).json({ result: false, message: "Invalid request body" });
         }
     } catch (error) {
         return res.status(500).json({
             result : false,
-            message : error.message
+            error: "Internal server error"
         })
     }
 }
